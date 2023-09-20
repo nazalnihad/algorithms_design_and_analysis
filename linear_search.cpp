@@ -49,7 +49,7 @@ int main()
  Input: A list of elements (array) arr.
          The element to be searched for, key.
  Output:The index of the key element if found, or -1 if the element is not in the list.
-       Methodology:
+
 
 1 - Initialize a variable i to 0.
 
