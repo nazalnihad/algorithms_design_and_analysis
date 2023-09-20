@@ -15,11 +15,10 @@ int linearSearch(int arr[], int n, int key)
 
 int main()
 {
-    int *arr;
-    int n;
+    int n, key;
     cout << "Enter the size of the array : ";
     cin >> n;
-    arr = new int[n];
+    int arr[n];
 
     cout << "Enter elements in the array : ";
     for (int i = 0; i < n; i++)
@@ -27,7 +26,6 @@ int main()
         cin >> arr[i];
     }
 
-    int key;
     cout << "Enter the number to find ";
     cin >> key;
 
