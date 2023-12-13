@@ -1,26 +1,60 @@
 #include <iostream>
 using namespace std;
 
+void printLCS(int row, int col, string text1, string text2, int **mat)
+{
+    int length = mat[row][col];
+    char *lcs = new char[length + 1];
+
+    int i = row, j = col, index = length;
+    while (i > 0 && j > 0)
+    {
+        if (text1[i - 1] == text2[j - 1])
+        {
+            lcs[index] = text1[i - 1];
+            i--;
+            j--;
+            index--;
+        }
+        else if (mat[i - 1][j] > mat[i][j - 1])
+        {
+            i--;
+        }
+        else
+        {
+            j--;
+        }
+    }
+
+    cout << "\nThe largest common subsequence is: ";
+    for (int k = 1; k <= length; k++)
+    {
+        cout << lcs[k];
+    }
+
+    delete[] lcs;
+}
+
 void lcs(int row, int col, string text1, string text2)
 {
-    int mat[row + 1][col + 1];
+    int **mat = new int *[row + 1];
+    for (int i = 0; i <= row; i++)
+    {
+        mat[i] = new int[col + 1];
+    }
 
     for (int i = 0; i <= row; i++)
     {
         for (int j = 0; j <= col; j++)
         {
-
             if (i == 0 || j == 0)
             {
                 mat[i][j] = 0;
             }
-
             else if (text1[i - 1] == text2[j - 1])
             {
                 mat[i][j] = mat[i - 1][j - 1] + 1;
-                // x = x + text1[i];
             }
-
             else
             {
                 mat[i][j] = max(mat[i - 1][j], mat[i][j - 1]);
@@ -28,25 +62,28 @@ void lcs(int row, int col, string text1, string text2)
         }
     }
 
+    cout << "\n"
+         << "The largest common subsequence length is: " << mat[row][col];
+    printLCS(row, col, text1, text2, mat);
+
+    // Deallocate memory
     for (int i = 0; i <= row; i++)
     {
-        for (int j = 0; j <= col; j++)
-        {
-            cout << mat[i][j] << " ";
-        }
-        cout << "\n";
+        delete[] mat[i];
     }
-
-    int x = row, y = col;
-    // return mat[row][col];
-    cout << "\n"
-         << "The largest common subsequence length is : " << mat[row][col];
+    delete[] mat;
 }
 
 int main()
 {
-    string S1 = "ABBCDS";
-    string S2 = "BSDFA";
+    string S1;
+    cout << "Enter string1 : ";
+    cin >> S1;
+
+    string S2;
+    cout << "Enter string2 : ";
+    cin >> S2;
+
     int m = S1.size();
     int n = S2.size();
 
