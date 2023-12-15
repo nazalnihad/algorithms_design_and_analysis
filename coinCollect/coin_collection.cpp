@@ -1,14 +1,41 @@
 #include <iostream>
-
 using namespace std;
 
-// Function to find the maximum number of coins that can be collected
-int maxCoinCollection(int grid[][3], int rows, int cols)
+void traceBack(int **grid, int rows, int cols)
 {
-    // Create a 2D array to store the maximum number of coins at each position
-    int dp[rows][cols];
+    int i = rows - 1;
+    int j = cols - 1;
+    cout << "Path of optimal decisions:" << endl;
+    cout << "(" << i << ", " << j << ")";
+    while (i > 0 || j > 0)
+    {
+        if (i > 0 && j > 0)
+        {
+            if (grid[i - 1][j] >= grid[i][j - 1])
+            {
+                --i;
+            }
+            else
+            {
+                --j;
+            }
+        }
+        else if (i > 0)
+        {
+            --i;
+        }
+        else
+        {
+            --j;
+        }
+        cout << " <- (" << i << ", " << j << ")";
+    }
+    cout << endl;
+}
 
-    // Fill in the array using dynamic programming
+int maxCoinCollection(int **grid, int rows, int cols)
+{
+    int dp[rows][cols];
     for (int i = 0; i < rows; ++i)
     {
         for (int j = 0; j < cols; ++j)
@@ -32,19 +59,34 @@ int maxCoinCollection(int grid[][3], int rows, int cols)
         }
     }
 
-    // The final result is stored at the bottom-right corner of the array
     return dp[rows - 1][cols - 1];
 }
 
 int main()
 {
-    // Example usage
-    int grid[][3] = {{1, 2, 3},
-                     {4, 5, 6},
-                     {7, 8, 9}};
-    int rows = 3;
-    int cols = 3;
+    int rows, cols;
+    cout << "Enter the number of rows: ";
+    cin >> rows;
+    cout << "Enter the number of columns: ";
+    cin >> cols;
+    int **grid = new int *[rows];
+    for (int i = 0; i < rows; ++i)
+    {
+        grid[i] = new int[cols];
+    }
+
+    cout << "Enter the elements of the grid:" << endl;
+    for (int i = 0; i < rows; ++i)
+    {
+        cout << "ROW " << i << " : ";
+        for (int j = 0; j < cols; ++j)
+        {
+            cin >> grid[i][j];
+        }
+    }
+
     int result = maxCoinCollection(grid, rows, cols);
+    traceBack(grid, rows, cols);
 
     cout << "Maximum number of coins that can be collected: " << result << endl;
 

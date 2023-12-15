@@ -38,5 +38,6 @@ int main()
     }
 
     bubbleSort(arr, n);
+    cout << "Sorted array is : ";
     print(arr, n);
 }

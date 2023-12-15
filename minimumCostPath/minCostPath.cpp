@@ -1,7 +1,42 @@
 #include <iostream>
 using namespace std;
 
-int minPath(int grid[][3], int rows, int cols)
+void showPath(int **matrix, int m, int n)
+{
+    cout << "\nPath\n";
+    int i = 0;
+    int j = 0;
+    cout << "(" << i + 1 << "," << j + 1 << ")-->";
+    while (i != m && j != n)
+    {
+        if (i == m)
+        {
+            j++;
+        }
+        else if (j == n)
+        {
+            i++;
+        }
+        else if (matrix[i + 1][j] <= matrix[i][j + 1] && matrix[i + 1][j] <= matrix[i + 1][j + 1])
+        {
+            i++;
+        }
+        else if (matrix[i][j + 1] <= matrix[i + 1][j] && matrix[i][j + 1] <= matrix[i + 1][j + 1])
+        {
+            j++;
+        }
+        else
+        {
+            i++;
+            j++;
+        }
+        cout << "(" << i + 1 << "," << j + 1 << ")-->";
+    }
+    cout << "(" << m + 1 << "," << n + 1 << ")";
+    return;
+}
+
+void minPath(int **grid, int rows, int cols)
 {
     int **m = new int *[rows];
     for (int i = 0; i < rows; i++)
@@ -32,8 +67,9 @@ int minPath(int grid[][3], int rows, int cols)
             }
         }
     }
-
     int result = m[rows - 1][cols - 1];
+    cout << "The minimum path sum is: " << result << endl;
+    showPath(m, rows - 1, cols - 1);
 
     // Deallocate memory
     for (int i = 0; i < rows; i++)
@@ -42,23 +78,34 @@ int minPath(int grid[][3], int rows, int cols)
     }
     delete[] m;
 
-    return result;
+    // return result;
 }
 
 int main()
 {
-    const int rows = 3;
-    const int cols = 3;
+    int rows, cols;
+    cout << "Enter the number of rows in the matrix: ";
+    cin >> rows;
+    cout << "Enter the number of columns in the matrix: ";
+    cin >> cols;
 
-    // Hardcoded 3x3 grid
-    int exampleGrid[3][3] = {
-        {1, 3, 1},
-        {1, 5, 1},
-        {4, 2, 1}};
+    int **matrix = new int *[rows];
+    for (int i = 0; i < rows; ++i)
+    {
+        matrix[i] = new int[cols];
+    }
 
-    int result = minPath(exampleGrid, rows, cols);
+    cout << "Enter the elements of the matrix:" << endl;
+    for (int i = 0; i < rows; ++i)
+    {
+        cout << "Row " << i << " : ";
+        for (int j = 0; j < cols; ++j)
+        {
+            cin >> matrix[i][j];
+        }
+    }
 
-    cout << "The minimum path sum is: " << result << endl;
+    minPath(matrix, rows, cols);
 
     return 0;
 }

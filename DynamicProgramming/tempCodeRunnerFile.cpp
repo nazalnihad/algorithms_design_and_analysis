@@ -12,19 +12,12 @@ void fibonacci(int n)
     {
         f[i] = f[i - 1] + f[i - 2];
     }
-
-    cout << "The fibonacci series : ";
-    for (int i = 0; i < n; i++)
-    {
-        cout << f[i] << " , ";
-    }
+    cout << "\n"
+         << f[n] << " ";
 }
 
 int main()
 {
-    int n;
-    cout << "Enter the number to find the n fibonacci series : ";
-    cin >> n;
-    fibonacci(n);
+    fibonacci(9);
     return 0;
 }
