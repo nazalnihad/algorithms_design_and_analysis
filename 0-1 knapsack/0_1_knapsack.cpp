@@ -51,7 +51,7 @@ void findMaxFit(int weights[], int values[], int capacity, int items)
         }
     }
 
-    cout << "\nSelected weights : ";
+    cout << "\nSelected Items no's : ";
     for (int k = selectedCount - 1; k >= 0; k--)
     {
         cout << selectedCoins[k] + 1 << " ";
